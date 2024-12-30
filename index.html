@@ -16,6 +16,7 @@
             display: flex; /* Für vertikale Zentrierung */
             flex-direction: column;
             min-height: 100vh; /* Mindesthöhe für den Viewport */
+              position: relative; /* Für Dark-Mode-Layer */
         }
 
         body::before {
@@ -25,7 +26,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://i.imgur.com/IyXnm6Y.jpeg');
+            background-image: url('https://cdn.gamma.app/fhpleqvbjim2f32/generated-images/m5jbKxn54d6Q01a4tMJgN.jpg');
             background-size: cover;
             background-position: center;
             z-index: -1;
@@ -217,8 +218,91 @@
               max-width: 100%;
             }
         }
-  
+     /* Chatbot Widget */
+        #chatbot-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
 
+        #chatbot-toggle {
+            background-color: #003366;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #chatbot-toggle:hover {
+            background-color: #002244;
+            transform: scale(1.1);
+        }
+
+
+        #chatbot-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            height: 500px;
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        #chatbot-container iframe {
+           width: 100%;
+           height: 100%;
+           border: none;
+           border-radius: 10px;
+        }
+
+    #chat-response {
+        width: 100%;
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #fff;
+        color: #333;
+    }
+
+    #chat-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    #send-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #003366;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #send-btn:hover {
+        background-color: #002244;
+    }
   </style>
 </head>
 
@@ -227,89 +311,98 @@
   <header>PLATFORMA MPU PREMIUM</header>
   <button class="dark-mode-toggle" onclick="toggleDarkMode()">Mod întunecat</button>
 
-  <main>
-    <div class="menu-container">
-      <div class="menu-item" onclick="showDescription('ablauf')">PROCESUL MPU</div>
-      <div class="menu-item" onclick="showDescription('kosten')">COSTURI MPU: EXAMINARE ȘI PREGĂTIRE</div>
-      <div class="menu-item" onclick="showDescription('alcool-calculator')">CALCULATOR DE ALCOOL</div>
-      <div class="menu-item" onclick="showDescription('leistungstests')">TESTE DE PERFORMANȚĂ</div>
-      <div class="menu-item" onclick="showDescription('mpu-qa')">MPU-APP: ÎNTREBĂRI ȘI RĂSPUNSURI</div>
-      <div class="menu-item" onclick="showDescription('gutachtersimulator')">SIMULATOR MPU</div>
-      <div class="menu-item" onclick="showDescription('wissen')">MPU QUIZ ȘI JOCURI</div>
-      <div class="menu-item" onclick="showDescription('checkliste')">LISTĂ DE VERIFICARE MPU</div>
-      <div class="menu-item" onclick="showDescription('frageboegen')">CHESTIONARE MPU</div>
-      <div class="menu-item" onclick="showDescription('ki-assistent')">ASISTENTUL KI</div>
-    </div>
-    <div class="content-container">
-        <div class="description" id="kosten-description">
+   <div id="chatbot-widget">
+       <button id="chatbot-toggle">🤖 Pornire Chatbot</button>
+       <div id="chatbot-container">
+         <div id="chat-response">Bine ai venit la Chatbot!</div>
+         <input type="text" id="chat-input" placeholder="Scrie un mesaj...">
+         <button id="send-btn">Trimite</button>
+       </div>
+   </div>
+
+  <div class="container">
+    <main>
+      <div class="menu-container">
+        <div class="menu-item" onclick="showDescription('ablauf')">PROCESUL MPU</div>
+        <div class="menu-item" onclick="showDescription('kosten')">COSTURI MPU: EXAMINARE ȘI PREGĂTIRE</div>
+        <div class="menu-item" onclick="showDescription('alcool-calculator')">CALCULATOR DE ALCOOL</div>
+        <div class="menu-item" onclick="showDescription('leistungstests')">TESTE DE PERFORMANȚĂ</div>
+         <div class="menu-item" onclick="showDescription('mpu-qa')">MPU-APP: ÎNTREBĂRI ȘI RĂSPUNSURI</div>
+        <div class="menu-item" onclick="showDescription('gutachtersimulator')">SIMULATOR MPU</div>
+         <div class="menu-item" onclick="showDescription('wissen')">MPU QUIZ ȘI JOCURI</div>
+          <div class="menu-item" onclick="showDescription('checkliste')">LISTĂ DE VERIFICARE MPU</div>
+        <div class="menu-item" onclick="showDescription('frageboegen')">CHESTIONARE MPU</div>
+         <div class="menu-item" onclick="showDescription('ki-assistent')">ASISTENTUL KI</div>
+      </div>
+      <div class="content-container">
+         <div class="description" id="kosten-description">
         <h3>Costuri MPU: Examinare și Pregătire</h3>
         <p>Detalii despre costurile MPU și pregătirea necesară le găsești aici.</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/lQNObTIqMIQ?si=Mp0JDdWUvYFGblvz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom', '_blank')">DESCHIDE ASISTENT KI</button>
+         <iframe width="560" height="315" src="https://www.youtube.com/embed/lQNObTIqMIQ?si=Mp0JDdWUvYFGblvz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+         <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom', '_blank')">DESCHIDE ASISTENT KI</button>
       </div>
-      <div class="description" id="alcool-calculator-description">
-        <h3>Calculator de Consum și de Alcool</h3>
-        <p>CALCULATOR : Pregătire MPU!</p>
-        <p>Calculator de consum de alcool cu diagramă.</p>
-        <button class="button" onclick="window.open('https://zaha175.github.io/ALCOOLCONSUMCALC/', '_blank')">Accesează Calculatorul pentru Consum.</button>
-        <p>Calculator alcool cu diagramă.</p>
-        <button class="button" onclick="window.open('https://zaha175.github.io/CALCULATORDEALCOOL/', '_blank')">Accesează Calculatorul pentru Promile.</button>
-      </div>
-      <div class="description" id="ablauf-description">
-        <h3>Procesul MPU</h3>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/srj4xbp3P8s?si=O4C-E0o8BKBcUji6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <ul>
-          <li>Înregistrare (10 minute), prezentarea dovezilor de abstinență și a certificatului de pregătire.</li>
-          <li>Completarea chestionarelor (30 minute)</li>
-          <li>Examinare medicală (30 minute)</li>
-          <li>Teste de reacție (20 minute)</li>
-          <li>Evaluare psihologică (60 minute)</li>
-        </ul>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/-rDeGHZdois?si=CCdAMZsJohBxcDf5" title="YouTube video player" frameborder="0" allow="accelerometer;
-        autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom')">ASISTENT KI</button>
-      </div>
-      <div class="description" id="leistungstests-description">
-        <h3>Teste de Performanță</h3>
-        <p>Aici găsești toate testele de performanță, cum ar fi cele de reacție și concentrare.</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/cHzoFyU0Gb4?si=FcSmnCV1pEDTvT0F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <ul>
-           <p>MPU TESTE DE REACȚIE : Pregătire MPU!</p>
-           <p><button class="button" onclick="window.open('https://gamma.app/docs/PanicDurataMPUNEU-145vlmugv0jsh2y', '_blank')">ACCESEAZĂ TESTELE DE REACȚIE</button><p>
-           <p><button class="button" onclick="window.open('https://zaha175.github.io/TestProbeRom/', '_blank')">TEST SITUAȚII DE TRAFIC</button><p>
-           <p><button class="button" onclick="window.open('https://zaha175.github.io/TESTFIGURI/', '_blank')">TEST FIGURI</button><p>
-        </ul>
-      </div>
-      <div class="description" id="checkliste-description">
-        <h3>Listă de Verificare MPU</h3>
-        <p>Pas cu pas către succesul MPU: utilizează lista noastră de verificare pentru a rămâne organizat și a te pregăti optim.</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/xmXUXZ81PxA?si=SINLc6pc2RB6XelJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <h3>Asistent KI</h3>
-        <p>Asistentul KI este pregătit să te ajute cu toate întrebările despre MPU.</p>
-        <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom', '_blank')">DESCHIDE ASISTENT KI</button>
-      </div>
-      <div class="description" id="mpu-qa-description">
-        <h3>MPU-App: Întrebări și Răspunsuri</h3>
-        <p>Întrebări și răspunsuri pentru pregătirea ta.</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/ex1yWg8lYRY?si=C_58m9h2SfUXXOUi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <ul>
+        <div class="description" id="alcool-calculator-description">
+            <h3>Calculator de Consum și de Alcool</h3>
+             <p>CALCULATOR : Pregătire MPU!</p>
+             <p>Calculator de consum de alcool cu diagramă.</p>
+                <button class="button" onclick="window.open('https://zaha175.github.io/ALCOOLCONSUMCALC/', '_blank')">Accesează Calculatorul pentru Consum.</button>
+               <p>Calculator alcool cu diagramă.</p>
+                <button class="button" onclick="window.open('https://zaha175.github.io/CALCULATORDEALCOOL/', '_blank')">Accesează Calculatorul pentru Promile.</button>
+            </div>
+        <div class="description" id="ablauf-description">
+          <h3>Procesul MPU</h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/srj4xbp3P8s?si=O4C-E0o8BKBcUji6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <ul>
+            <li>Înregistrare (10 minute), prezentarea dovezilor de abstinență și a certificatului de pregătire.</li>
+            <li>Completarea chestionarelor (30 minute)</li>
+            <li>Examinare medicală (30 minute)</li>
+            <li>Teste de reacție (20 minute)</li>
+            <li>Evaluare psihologică (60 minute)</li>
+          </ul>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/-rDeGHZdois?si=CCdAMZsJohBxcDf5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+           <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom')">ASISTENT KI</button>
+        </div>
+        <div class="description" id="leistungstests-description">
+          <h3>Teste de Performanță</h3>
+          <p>Aici găsești toate testele de performanță, cum ar fi cele de reacție și concentrare.</p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/cHzoFyU0Gb4?si=FcSmnCV1pEDTvT0F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <ul>
+            <p>MPU TESTE DE REACȚIE : Pregătire MPU!</p>
+            <p><button class="button" onclick="window.open('https://gamma.app/docs/PanicDurataMPUNEU-145vlmugv0jsh2y', '_blank')">ACCESEAZĂ TESTELE DE REACȚIE</button><p>
+             <p><button class="button" onclick="window.open('https://zaha175.github.io/TestProbeRom/', '_blank')">TEST SITUAȚII DE TRAFIC</button><p>
+             <p><button class="button" onclick="window.open('https://zaha175.github.io/TESTFIGURI/', '_blank')">TEST FIGURI</button><p>
+          </ul>
+        </div>
+       <div class="description" id="checkliste-description">
+          <h3>Listă de Verificare MPU</h3>
+           <p>Pas cu pas către succesul MPU: utilizează lista noastră de verificare pentru a rămâne organizat și a te pregăti optim.</p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/xmXUXZ81PxA?si=SINLc6pc2RB6XelJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+           <h3>Asistent KI</h3>
+           <p>Asistentul KI este pregătit să te ajute cu toate întrebările despre MPU.</p>
+           <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom', '_blank')">DESCHIDE ASISTENT KI</button>
+          </div>
+        <div class="description" id="mpu-qa-description">
+          <h3>MPU-App: Întrebări și Răspunsuri</h3>
+          <p>Întrebări și răspunsuri pentru pregătirea ta.</p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/ex1yWg8lYRY?si=C_58m9h2SfUXXOUi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <ul>
        <p>MPU ÎNTREBĂRI ȘI RĂSPUNSURI : Pregătire MPU!</p>
         <p><button class="button" onclick="window.open('https://zaha175.github.io/ABUZROM/', '_blank')">MPU-APP: ÎNTREBĂRI ȘI RĂSPUNSURI</button><p>
         <p><button class="button" onclick="window.open('https://zaha175.github.io/FRAGENANTWORTENROMCUEXPLICATII/', '_blank')">MPU-APP: ÎNTREBĂRI ȘI RĂSPUNSURI EXPLICATE</button><p>
         <p><button class="button" onclick="window.open('https://zaha175.github.io/MPUINTREBARERASPUNS/', '_blank')">MPU-APP: ÎNTREBĂRI ȘI RĂSPUNSURI ALTERNATIV</button><p>
         <p> <button class="button" onclick="window.open('https://gamma.app/docs/PANICVIDEOS-wo5zf7m40ilkm42', '_blank')">MPU-VIDEOS: ÎNTREBĂRI ȘI RĂSPUNSURI</button><p>
         </ul>
-         </div>
-      <div class="description" id="ki-assistent-description">
+        </div>
+        <div class="description" id="ki-assistent-description">
         <h3>Asistent KI</h3>
         <p>Asistentul KI este pregătit să te ajute cu toate întrebările despre MPU.</p>
         <button class="button" onclick="window.open('https://chatgpt.com/g/g-675d7bdf5d60819192be6d2b1a5145b2-mpu-asistent-rom', '_blank')">DESCHIDE ASISTENT KI</button>
-      </div>
-      <div class="description" id="gutachtersimulator-description">
+       </div>
+         <div class="description" id="gutachtersimulator-description">
         <h3>Simulator MPU</h3>
         <p>Simulare a unei discuții MPU.</p>
-        <button class="button" onclick="window.open('https://chatgpt.com/g/g-6762be655f0c8191ab1b03ecce6c49f3-asistentdinamicpetru', '_blank')">DESCHIDE SIMULATOR KI</button>
-      </div>
+          <button class="button" onclick="window.open('https://chatgpt.com/g/g-6762be655f0c8191ab1b03ecce6c49f3-asistentdinamicpetru', '_blank')">DESCHIDE SIMULATOR KI</button>
+       </div>
       <div class="description" id="wissen-description">
     <h3>MPU QUIZ ȘI JOCURI</h3>
     <p>MPU QUIZ : Testează-ți cunoștințele despre MPU.</p>
@@ -322,49 +415,63 @@
     <p><button class="button" onclick="window.open('https://zaha175.github.io/JOC2ROM/', '_blank')">ÎNCEPE JOCUL2</button></p>
     <p><button class="button" onclick="window.open('https://zaha175.github.io/JOC3ROM/', '_blank')">ÎNCEPE JOCUL3</button></p>
 </div>
-
       <div class="description" id="frageboegen-description">
-        <h3>Chestionare MPU</h3>
+          <h3>Chestionare MPU</h3>
         <p>Exerciții și chestionare pentru MPU.</p>
-        <button class="button" onclick="window.open('https://gamma.app/docs/Chestionare-MPU-jqrbicoiikh83o2', '_blank')">VEZI CHESTIONARE</button>
+          <button class="button" onclick="window.open('https://gamma.app/docs/Chestionare-MPU-jqrbicoiikh83o2', '_blank')">VEZI CHESTIONARE</button>
       </div>
+         <div class="description" id="header-description">
+          <h3>Bine ai venit pe PLATFORMA MPU</h3>
+        <p>Apasă pe elementele din meniu, ca să afli mai multe.</p>
     </div>
-  </main>
-
+      </div>
+    </main>
+  </div>
   <script>
-    function showDescription(category) {
-  let descriptions = document.querySelectorAll('.description');
-  descriptions.forEach(description => {
-    description.classList.remove('active');
-  });
-  let description = document.getElementById(`${category}-description`);
-  if (description) {
-    description.classList.add('active');
-  }
+       function showDescription(category) {
+        let descriptions = document.querySelectorAll('.description');
+        descriptions.forEach(description => {
+            description.classList.remove('active');
+        });
+        let description = document.getElementById(`${category}-description`);
+        if (description) {
+            description.classList.add('active');
+        }
 
-  let menuItems = document.querySelectorAll('.menu-item');
-  menuItems.forEach(item => {
-    item.classList.remove('active'); // Entfernt die Klasse von allen
-  });
-  let activeMenuItem = document.querySelector(`.menu-item[onclick="showDescription('${category}')"]`);
-  if (activeMenuItem) {
-    activeMenuItem.classList.add('active'); // Fügt die Klasse dem aktuellen hinzu
-  }
-}
-function toggleDarkMode() {
-  document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-}
+        let menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+          item.classList.remove('active'); // Entfernt die Klasse von allen
+        });
+        let activeMenuItem = document.querySelector(`.menu-item[onclick="showDescription('${category}')"]`);
+         if (activeMenuItem) {
+           activeMenuItem.classList.add('active'); // Fügt die Klasse dem aktuellen hinzu
+         }
+    }
 
-// Lade Dark-Mode beim Start
-window.onload = () => {
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-  }
-};
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
 
+     // Lade Dark-Mode beim Start
+    window.onload = () => {
+         if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+         }
+            document.getElementById('chatbot-toggle').onclick = () => {
+                const container = document.getElementById('chatbot-container');
+                container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+                document.getElementById('chat-response').innerText = 'Chatbot-ul nu este disponibil în prezent. Vă rugăm să încercați din nou mai târziu.';
+            };
 
-  </script>
+            // Chatbot deaktiviert – Platzhalterantwort
+            document.getElementById('send-btn').onclick = () => {
+                 document.getElementById('chat-response').innerText = 'Chatbot-ul nu este disponibil în prezent. Vă rugăm să încercați din nou mai târziu.';
+           }
+
+    };
+
+    </script>
 
 </body>
 
